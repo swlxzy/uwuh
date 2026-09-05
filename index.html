@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0d11">
+<meta name="description" content="UWHIRMY — premium local music player">
+<title>UWHIRMY — Premium Music Player</title>
+<link rel="stylesheet" href="css_full.css">
+</head>
+<body>
+<div class="app" id="app">
+  <div class="bg-layer" id="bgLayer"><div class="bg-orb a"></div><div class="bg-orb b"></div><div class="liquid"></div><div class="grid-bg"></div></div>
+
+  <header class="topbar">
+    <button class="brand" id="brandBtn" aria-label="UWHIRMY home">
+      <span class="logo-orbit brand-logo" id="logoOrbit" aria-hidden="true"><span class="logo-particles" id="logoParticles"></span><span class="logo-core" id="logoCore"></span></span>
+    </button>
+    <div class="top-brand-stack"><div class="top-brand-side">UWHIRMY</div><div class="top-brand-sub">STYLE.YXZ</div></div>
+  </header>
+
+  <main>
+    <section class="page active" id="homePage">
+      <div class="kicker">Premium local music player</div>
+      <h1>UWHIRMY</h1>
+      <div id="homeContent"></div>
+      <div class="section">
+        <div class="section-head"><h2>Recently Played</h2><button class="pill" id="homeLibraryBtn">Library</button></div>
+        <div class="track-list recent-home-list" id="recentHome"></div>
+      </div>
+    </section>
+
+    <section class="page" id="libraryPage">
+      <div class="kicker">Your collection</div><h1>Library</h1>
+      <div class="section">
+        <div class="search-wrap"><svg class="svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 5 5"/></svg><input class="search" id="searchInput" placeholder="Search title, artist or album" autocomplete="off"></div>
+        <div class="filters" id="filters">
+          <button class="filter active" data-filter="all">ALL</button><button class="filter" data-filter="added">RECENTLY ADDED</button><button class="filter" data-filter="favorite">FAVORITES</button><button class="filter" data-filter="played">RECENTLY PLAYED</button>
+        </div>
+        <div class="dropzone" id="dropzone"><div>DROP MUSIC FILES HERE</div><button class="add-btn" data-add style="margin-top:12px"><svg class="svg" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>ADD MUSIC</button></div>
+        <div class="track-list" id="libraryList" style="margin-top:14px"></div>
+      </div>
+    </section>
+
+    <section class="page" id="visualizerPage">
+      <div class="kicker">Real-time audio analysis</div><h1>Visualizer</h1>
+      <div class="section card visual-card">
+        <canvas id="visualCanvas"></canvas>
+        <div class="viz-switch" id="vizSwitch">
+          <button class="viz-btn active" data-viz="spectrum">Spectrum</button><button class="viz-btn" data-viz="circular">Circular</button><button class="viz-btn" data-viz="waveform">Waveform</button><button class="viz-btn" data-viz="particle">Particle</button><button class="viz-btn" data-viz="neon">Neon Pulse</button>
+        </div>
+      </div>
+      <div class="section card setting-card">
+        <div class="setting-title">LIVE SIGNAL</div>
+        <div class="stat"><span>BASS</span><b id="bassValue">0%</b></div><div class="stat"><span>MID</span><b id="midValue">0%</b></div><div class="stat"><span>TREBLE</span><b id="trebleValue">0%</b></div><div class="stat"><span>OVERALL</span><b id="overallValue">0%</b></div>
+      </div>
+    </section>
+
+    <section class="page" id="settingsPage">
+      <div class="kicker">Personalize the player</div><h1>Settings</h1>
+      <div class="settings-category-nav">
+        <button class="settings-category" data-settings-target="appearanceCard"><strong>APPEARANCE</strong><span>Theme & background</span></button>
+        <button class="settings-category" data-settings-target="visualizerCard"><strong>VISUALIZER</strong><span>Style & sensitivity</span></button>
+        <button class="settings-category" data-settings-target="audioCard"><strong>AUDIO</strong><span>EQ & volume</span></button>
+        <button class="settings-category" data-settings-target="playerCard"><strong>PLAYER</strong><span>Playback controls</span></button>
+        <button class="settings-category" data-settings-target="performanceCard"><strong>PERFORMANCE</strong><span>FPS & motion</span></button>
+        <button class="settings-category" id="settingsLyricsDesign"><strong>LYRICS DESIGN</strong><span>Font, color & effects</span></button>
+      </div>
+      <div class="section settings-grid">
+        <div class="card setting-card wide settings-anchor" id="appearanceCard"><div class="setting-title">APPEARANCE</div><div class="theme-grid" id="themeGrid"></div><div class="setting-title" style="margin-top:16px">HOME LOGO</div><div class="logo-style-grid" id="logoStyleOptions"></div><div class="setting-title" style="margin-top:16px">LOGO PARTICLES</div><div class="option-grid" id="logoParticleOptions"></div></div>
+        <div class="card setting-card"><div class="setting-title">BACKGROUND</div><div class="option-grid" id="backgroundOptions"></div></div>
+        <div class="card setting-card settings-anchor" id="visualizerCard"><div class="setting-title">VISUALIZER</div><div class="option-grid" id="visualizerOptions"></div><div class="setting-title" style="margin-top:14px">VISUALIZER COLOR</div><div class="viz-colors" id="vizColorOptions"></div><div class="viz-custom" id="vizCustomWrap"><span class="muted" style="font-size:11px">Custom color</span><input id="vizCustomColor" type="color" value="#9a72d7" aria-label="Custom visualizer color"></div><div style="height:10px"></div><div class="setting-title">SENSITIVITY</div><div class="option-grid" id="sensitivityOptions"></div></div>
+        <div class="card setting-card settings-anchor" id="audioCard"><div class="setting-title">EQUALIZER</div><div class="eq-grid"><div class="eq-band"><label>BASS</label><input id="eqBass" type="range" min="-6" max="8" step="1"></div><div class="eq-band"><label>MID</label><input id="eqMid" type="range" min="-6" max="8" step="1"></div><div class="eq-band"><label>TREBLE</label><input id="eqTreble" type="range" min="-6" max="8" step="1"></div></div><div class="eq-presets" id="eqPresets"></div><div class="toggle-row"><div><strong style="font-size:12px">Bass Boost</strong><div class="muted" style="font-size:10px;margin-top:3px">Low-end enhancement</div></div><button class="switch" id="bassBoostSwitch" aria-label="Bass Boost"><i></i></button></div><div class="range-row"><span class="muted" style="font-size:11px">Boost level</span><input class="range" id="bassBoostLevel" type="range" min="2" max="12" step="1"></div></div>
+        <div class="card setting-card"><div class="setting-title">NOW PLAYING</div><div class="toggle-row"><div><strong style="font-size:12px">Dynamic Artwork</strong><div class="muted" style="font-size:10px;margin-top:3px">Match colors to the album cover</div></div><button class="switch" id="dynamicArtworkSwitch" aria-label="Dynamic Artwork"><i></i></button></div></div>
+        <div class="card setting-card settings-anchor" id="playerCard"><div class="setting-title">PLAYER</div><div class="option-grid"><button class="option" id="settingShuffle"><strong>Shuffle</strong><span>Randomize next track</span></button><button class="option" id="settingRepeat"><strong>Repeat</strong><span id="repeatLabel">OFF</span></button></div><div style="margin-top:14px" class="range-row"><span class="muted" style="font-size:12px">Volume</span><input class="range" id="volumeSetting" type="range" min="0" max="1" step=".01"></div></div>
+        <div class="card setting-card settings-anchor" id="performanceCard"><div class="setting-title">PERFORMANCE</div><div class="option-grid" id="fpsOptions"></div><div style="height:9px"></div><button class="option" id="motionOption" style="width:100%;text-align:left"><strong>Reduced Motion</strong><span id="motionLabel">OFF</span></button></div>
+        <div class="card setting-card"><div class="setting-title">STORAGE</div><div class="stat"><span>TRACKS</span><b id="storageTracks">0</b></div><div class="stat"><span>APPROX. AUDIO</span><b id="storageSize">0 MB</b></div><div class="stat"><span>DATABASE</span><b>UWHIRMY_DB</b></div></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="mini-player" id="miniPlayer" hidden aria-label="Mini player"><button class="mini-cover-btn" id="miniCoverBtn" aria-label="Open Now Playing"><img class="mini-cover" id="miniCover" alt=""></button><button class="mini-info" id="miniOpen" aria-label="Open Now Playing"><div class="mini-title" id="miniTitle">No music</div><div class="mini-meta" id="miniMeta">Add music to begin</div></button><button class="mini-action" id="miniPlay" aria-label="Play or pause"></button><button class="mini-action" id="miniNext" aria-label="Next track"><svg class="svg" viewBox="0 0 24 24"><path d="m6 6 9 6-9 6zM18 5v14"/></svg></button><div class="mini-progress"><i id="miniProgress"></i></div></div>
+  <nav class="bottom-nav" aria-label="Primary">
+    <button class="nav-btn active" data-page="homePage"><svg class="svg" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>HOME</span></button>
+    <button class="nav-btn" data-page="libraryPage"><svg class="svg" viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg><span>LIBRARY</span></button>
+    <button class="nav-btn" data-page="visualizerPage"><svg class="svg" viewBox="0 0 24 24"><path d="M4 19V9M8 19V5M12 19v-9M16 19V3M20 19v-7"/></svg><span>VISUALIZER</span></button>
+    <button class="nav-btn" data-page="settingsPage" aria-label="Settings"><svg class="svg settings-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.43 12.98c.04-.32.07-.65.07-.98s-.02-.66-.07-.98l2.11-1.65a.5.5 0 0 0 .12-.64l-2-3.46a.5.5 0 0 0-.61-.22l-2.49 1a7.2 7.2 0 0 0-1.69-.98L14.5 2.42A.49.49 0 0 0 14 2h-4a.49.49 0 0 0-.5.42L9.12 5.07c-.61.25-1.18.58-1.69.98l-2.49-1a.5.5 0 0 0-.61.22l-2 3.46a.5.5 0 0 0 .12.64l2.11 1.65c-.04.32-.08.65-.08.98s.03.66.08.98l-2.11 1.65a.5.5 0 0 0-.12.64l2 3.46a.5.5 0 0 0 .61.22l2.49-1c.51.4 1.08.73 1.69.98l.38 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.38-2.65c.61-.25 1.18-.58 1.69-.98l2.49 1a.5.5 0 0 0 .61-.22l2-3.46a.5.5 0 0 0-.12-.64l-2.11-1.65ZM12 15.5A3.5 3.5 0 1 1 12 8a3.5 3.5 0 0 1 0 7.5Z"/></svg><span>SETTINGS</span></button>
+  </nav>
+
+  <input id="fileInput" type="file" multiple hidden accept="audio/*,.mp3,.wav,.ogg,.oga,.m4a,.mp4,.aac,.flac,.webm,.opus">
+  <div class="toast" id="toast"></div>
+
+  <div class="modal" id="confirmModal"><div class="modal-box"><div class="kicker">Library</div><h2 style="margin-top:6px">Remove track?</h2><p class="muted" id="removeName" style="font-size:13px">This removes the saved audio from UWHIRMY.</p><div class="modal-actions"><button class="cancel" id="cancelRemove">CANCEL</button><button class="danger" id="confirmRemove">REMOVE</button></div></div></div>
+
+  <div class="now-overlay" id="nowOverlay"><div class="now-inner">
+    <div class="now-head"><button class="icon-btn" id="closeNow" aria-label="Close"><svg class="svg" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button><span class="kicker">NOW PLAYING</span><button class="icon-btn" id="nowFavorite" aria-label="Favorite"><svg class="svg" viewBox="0 0 24 24"><path d="M20.8 8.8c0 5-8.8 10-8.8 10s-8.8-5-8.8-10A4.8 4.8 0 0 1 12 6.4a4.8 4.8 0 0 1 8.8 2.4z"/></svg></button></div>
+    <div class="now-tabs" role="tablist" aria-label="Now playing views"><button class="now-tab active" id="nowMusicTab" role="tab" aria-selected="true">MUSIC</button><button class="now-tab" id="nowLyricsTab" role="tab" aria-selected="false">LYRICS</button></div>
+    <div class="now-slider" id="nowSlider">
+      <section class="now-slide now-music-slide" id="nowMusicView" aria-label="Music">
+        <div class="now-cover-wrap"><img class="now-cover" id="nowCover" alt=""></div>
+        <div class="now-info"><div class="track-title" id="nowTitle">No music yet</div><div class="track-meta" id="nowMeta">Add music to begin</div></div>
+        <div class="progress-wrap"><input class="progress" id="nowProgress" type="range" min="0" max="1000" value="0"><div class="time-row"><span id="nowElapsed">0:00</span><span id="nowDuration">0:00</span></div></div>
+        <div class="now-controls"><button class="control" id="nowShuffle" title="Shuffle"><svg class="svg" viewBox="0 0 24 24"><path d="M4 7h3c4 0 6 10 10 10h3M17 5l3 2-3 2M4 17h3c1.7 0 2.8-1.1 3.7-2.3M17 15l3 2-3 2"/></svg></button><button class="control" id="nowPrev"><svg class="svg" viewBox="0 0 24 24"><path d="M6 5v14M18 6 9 12l9 6z"/></svg></button><button class="play" id="nowPlay"><svg class="svg" viewBox="0 0 24 24"><path d="m9 6 10 6-10 6z" fill="currentColor" stroke="none"/></svg></button><button class="control" id="nowNext"><svg class="svg" viewBox="0 0 24 24"><path d="m6 6 9 6-9 6zM18 5v14"/></svg></button><button class="control" id="nowRepeat"><svg class="svg" viewBox="0 0 24 24"><path d="M7 7h10l-2.5-2.5M17 17H7l2.5 2.5M17 7a5 5 0 0 1 1.5 3.5M7 17A5 5 0 0 1 5.5 13"/></svg></button></div>
+      </section>
+      <section class="now-slide now-lyrics-slide" id="nowLyricsView" aria-label="Lyrics">
+        <div class="lyrics-panel show" id="lyricsPanel">
+          <div class="lyrics-toolbar"><button class="lyrics-style active" data-lyrics-style="normal">NORMAL</button><button class="lyrics-style" data-lyrics-style="fade">FADE</button></div>
+          <div class="lyrics-view" id="lyricsView"></div>
+          <div class="lyrics-actions"><button class="pill" id="openFullLyrics">FULL SCREEN LYRICS</button><button class="pill" id="editLyrics">ADD / EDIT LYRICS</button></div>
+        </div>
+      </section>
+    </div>  </div></div>
+
+  <section class="lyrics-fullscreen" id="lyricsFullscreen" aria-hidden="true">
+    <div class="lyrics-full-head">
+      <button class="icon-btn" id="closeFullLyrics" aria-label="Back"><svg class="svg" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></button>
+      <div class="full-song"><strong id="fullLyricsTitle">No music yet</strong><span id="fullLyricsArtist">Add music to begin</span></div>
+    </div>
+    <div class="full-lyrics-stage"><div class="lyrics-view lyrics-full-view" id="fullLyricsView"></div></div>
+    <div class="full-lyrics-mini"><span id="fullLyricsTime">0:00</span><span>LYRICS</span><span id="fullLyricsDuration">0:00</span></div>
+  </section>
+
+  <div class="modal lyrics-customizer" id="lyricsCustomizer"><div class="modal-box">
+    <div class="kicker">LYRICS STYLE</div><h2 style="margin-top:6px">Customize lyrics</h2>
+    <div class="custom-grid">
+      <label>COLOR MODE<select id="lyricColorMode"><option value="solid">SOLID</option><option value="gradient2">2-COLOR GRADIENT</option><option value="gradient3">3-COLOR GRADIENT</option></select></label>
+      <label>FONT<select id="lyricFont"><option value="Inter">INTER</option><option value="Georgia">GEORGIA</option><option value="Arial">ARIAL</option><option value="Trebuchet MS">TREBUCHET</option><option value="Courier New">MONO</option><option value="Verdana">VERDANA</option></select></label>
+      <label>COLOR 1<input id="lyricColor" type="color" value="#f4f5f7"></label>
+      <label>COLOR 2<input id="lyricColor2" type="color" value="#8b5cf6"></label>
+      <label>COLOR 3<input id="lyricColor3" type="color" value="#22d3ee"></label>
+      <label>EFFECT<select id="lyricEffect"><option value="none">NONE</option><option value="soft">SOFT GLOW</option><option value="wave">WAVE</option><option value="blur">BLUR IN</option></select></label>
+      <label>SIZE<input id="lyricSize" type="range" min="16" max="42" value="24"></label>
+      <label>ANGLE<input id="lyricAngle" type="range" min="0" max="360" value="90"></label>
+    </div>
+    <div class="style-preview" id="lyricPreview">STYLE.YXZ</div>
+    <div class="modal-actions"><button class="cancel" id="cancelLyricsCustomize">CLOSE</button><button class="add-btn" id="saveLyricsCustomize">APPLY</button></div>
+  </div></div>
+
+  <div class="modal lyrics-editor" id="lyricsEditor"><div class="modal-box">
+    <div class="kicker">LYRICS</div><h2 style="margin-top:6px">Add or edit lyrics</h2>
+    <p class="muted" id="lyricsEditorTrack" style="font-size:12px;margin:8px 0 0">Current track</p>
+    <textarea id="lyricsInput" spellcheck="false" placeholder="[00:12.50] First line
+[00:16.20] Second line
+
+Or paste plain lyrics, then use Sync mode to stamp each line."></textarea>
+    <div class="lyrics-help">Timed LRC: <b>[mm:ss.xx] text</b>. Word timing is also supported with <b>&lt;mm:ss.xx&gt;</b> tags inside a line.</div>
+    <div class="lyrics-sync" id="lyricsSync">
+      <div class="sync-meta" id="syncMeta">Sync mode: play the song and stamp each line at the moment it starts.</div>
+      <div class="sync-current" id="syncCurrent">Press START SYNC</div>
+      <button class="sync-btn" id="syncStamp">START SYNC</button>
+    </div>
+    <div class="modal-actions"><button class="cancel" id="cancelLyrics">CANCEL</button><button class="pill" id="toggleSync">SYNC MODE</button><button class="add-btn" id="saveLyrics">SAVE LYRICS</button></div>
+  </div></div>
+
+  <div class="splash"><div class="splash-inner">
+    <svg class="splash-logo" viewBox="0 0 64 64"><path d="M12 17v21c0 9 6 15 14 15s14-6 14-15V17M26 17v19c0 5 3 8 7 8s7-3 7-8V17M42 17v21c0 9 4 15 10 15" fill="none" stroke="#f4f5f7" stroke-width="4" stroke-linecap="round"/><path d="M9 47c7-5 13-5 20 0s13 5 20 0 10-5 14-1" fill="none" stroke="#bfc7d2" stroke-width="2" stroke-linecap="round"/></svg>
+    <div class="splash-name">UWHIRMY</div>
+  </div></div>
+</div>
+
+<audio id="audio" preload="metadata" crossorigin="anonymous"></audio>
+script src="js_full.js"></script>
+</body>
+</html>
